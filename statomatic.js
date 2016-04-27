@@ -51,7 +51,7 @@ app.get('/health', function(req, res)
 {
     res.writeHead(200);
     res.end();
-}
+});
 
 // route to authenticate a user (POST http://localhost:8080/api/authenticate)
 statomaticRouter.post('/login', function(req, res) {
