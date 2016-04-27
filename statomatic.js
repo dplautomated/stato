@@ -21,12 +21,12 @@ var pool = mysql.createPool({
 
 //Everything in here is specifically to enable CORS for testing
 app.use(function(req, res, next) {
-  //res.header("Access-Control-Allow-Origin", "*");
-  ////res.header("Access-Control-Allow-Origin", "http://localhost");
-  ////res.header("Access-Control-Allow-Credentials", "true");
-  //res.header("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
-  //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Access-Control-Allow-Origin, Accept, x-access-token");
-  //res.header("Content-Type", "application/json");
+  res.header("Access-Control-Allow-Origin", "*");
+  //res.header("Access-Control-Allow-Origin", "http://localhost");
+  //res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Access-Control-Allow-Origin, Accept, x-access-token");
+  res.header("Content-Type", "application/json");
   //next();
   
   // intercept OPTIONS method  THIS IS EXTREMELY IMPORTANT.  Not doing this always leads "complex" methods to freak out.
@@ -263,6 +263,7 @@ computerLogRouter.delete('/:log_id', function(req, res) {
 app.get('/patinfo/:barcode', function(req, res) {
 	request({url: 'https://library.cityofdenton.com/iii/sierra-api/v2/token', method: 'POST', headers: {'Authorization': 'Basic R2lXcW85M04vYlZIUjU1S0FLL3dQK2xMUE4xdTpqb2ZlNnljYw=='}}, function(error, request, body){
 		if(request.statusCode == '200'){
+
 			//var accesscode = 'Bearer ' + body.access_token;
 			var parsedbody = JSON.parse(body);
 			request2({url: 'https://library.cityofdenton.com/iii/sierra-api/v2/patrons/find?barcode=' + req.params.barcode + '&fields=names%2CexpirationDate%2CmoneyOwed', method: 'GET', headers: {'Authorization': 'Bearer ' + parsedbody.access_token}}, function(error2, request2, body2){
