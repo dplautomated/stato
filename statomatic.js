@@ -292,5 +292,5 @@ statomaticRouter.delete('/room/:log_id', function(req, res) {
 
 app.use('/', statomaticRouter);
 
-app.listen(8080);
+app.listen(process.env.OPENSHIFT_NODEJS_PORT);
 
