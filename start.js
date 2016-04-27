@@ -37,4 +37,5 @@ if (cluster.isMaster) {
   }
 } else {
   require('./app.js');
+  require('./statomatic.js');
 }
