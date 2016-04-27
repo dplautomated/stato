@@ -251,6 +251,7 @@ statomaticRouter.post('/room', function(req, res) {
 		else{
 			console.log("update out times");
 			pool.query('INSERT INTO study_room_log (resource_id, number_people) VALUES (?, ?)', [req.body.resource_id, req.body.number_people], function(err, rows, fields) {
+
 				if(err){
 					console.log("loggingerror");
 					reportError(err, res);
@@ -292,5 +293,5 @@ statomaticRouter.delete('/room/:log_id', function(req, res) {
 
 app.use('/', statomaticRouter);
 
-app.listen(process.env.OPENSHIFT_NODEJS_PORT);
+app.listen(process.env.OPENSHIFT_NODEJS_PORT, process.env.OPENSHIFT_NODEJS_IP, function(){console.log("Sever started!")});
 
