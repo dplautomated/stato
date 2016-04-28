@@ -205,7 +205,7 @@ app.get('/computer/last/:branch', function(req, res) {
 });
 
 app.get('/computer/status/:branch', function(req, res) {
-	pool.query('SELECT res.id, res.name, res.branch, logs.id AS log_id, logs.pat_name, CONVERT_TZ(logs.time_out, ?, ?) AS time_out, logs.time_in FROM (SELECT * FROM computer_checkout_log WHERE DATE(time_out) = CURDATE()) AS logs JOIN (SELECT * FROM computer_list WHERE branch = ? AND checkout = 1 AND status = 2) AS res ON logs.resource_id = res.id ORDER BY res.name', ["America/Los_Angeles", "America/New_York", req.params.branch], function(err, rows, fields) {				
+	pool.query('SELECT res.id, res.name, res.branch, logs.id AS log_id, logs.pat_name, CONVERT_TZ(logs.time_out, ?, ?) AS time_out, CONVERT_TZ(logs.time_in, ?, ?) as time_in FROM (SELECT * FROM computer_checkout_log WHERE DATE(time_out) = CURDATE()) AS logs JOIN (SELECT * FROM computer_list WHERE branch = ? AND checkout = 1 AND status = 2) AS res ON logs.resource_id = res.id ORDER BY res.name', ["America/Los_Angeles", "America/New_York", "America/Los_Angeles", "America/New_York", req.params.branch], function(err, rows, fields) {				
 		if(err){
 			reportError(err, res);
 			return;
@@ -321,7 +321,7 @@ app.get('/patinfo/:barcode', function(req, res) {
 });
 */
 roomLogRouter.get('/:branch', function(req, res) {
-	pool.query('SELECT res.id, res.name, res.branch, logs.id AS log_id, logs.number_people, logs.time_in, logs.time_out  FROM (SELECT * FROM room_list WHERE branch = ? AND active = 1) AS res LEFT JOIN (SELECT * FROM study_room_log WHERE time_out IS NULL and DATE(time_in) = CURDATE()) AS logs ON res.id = logs.resource_id ORDER BY res.name', [req.params.branch, 'study_room'], function(err, rows, fields) {
+	pool.query('SELECT res.id, res.name, res.branch, logs.id AS log_id, logs.number_people, CONVERT_TZ(logs.time_in, ?, ?) as time_in, CONVERT_TZ(logs.time_out, ?, ?) AS time_out  FROM (SELECT * FROM room_list WHERE branch = ? AND active = 1) AS res LEFT JOIN (SELECT * FROM study_room_log WHERE time_out IS NULL and DATE(time_in) = CURDATE()) AS logs ON res.id = logs.resource_id ORDER BY res.name', ["America/Los_Angeles", "America/New_York", "America/Los_Angeles", "America/New_York", req.params.branch, 'study_room'], function(err, rows, fields) {
 		if(err){
 			reportError(err, res);
 			return;
