@@ -136,7 +136,7 @@ app.post('/login', function(req, res) {
 		// create a token
 		var token = jwt.sign({username: rows[0]['username'], branch: rows[0]['branch'], role: rows[0]['role']}, /*app.get('superSecret')*/'lexicallibrarian', {
 		//expiresInMinutes: 720 // expires in 12 hours
-		expiresIn: 480
+		expiresIn: 43200
 		});
 
 		// return the information including token as JSON
