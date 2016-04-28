@@ -15,7 +15,8 @@ var pool = mysql.createPool({
   host     : 'mysql.dentonpl.com',
   user     : 'statodentonplcom',
   password : '!J0fe6yc!',
-  database : 'stato_dentonpl_com'
+  database : 'stato_dentonpl_com',
+  multipleStatements: true
 });
 
 
@@ -212,7 +213,7 @@ app.get('/computer/status/:branch', function(req, res) {
 		}
 		
 		console.log("getting computer status");
-		returnResult(res, rows);
+		returnResult(res, rows[1]);
 	});
 });
 
