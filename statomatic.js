@@ -212,6 +212,7 @@ app.get('/computer/status/:branch', function(req, res) {
 		}
 		
 		console.log("getting computer status");
+		console.log("time_out: "rows["time_out"]);
 		returnResult(res, rows);
 	});
 });
