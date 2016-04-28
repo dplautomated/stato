@@ -205,7 +205,7 @@ app.get('/computer/last/:branch', function(req, res) {
 });
 
 app.get('/computer/status/:branch', function(req, res) {
-	pool.query('SELECT res.id, res.name, res.branch, logs.id AS log_id, logs.pat_name, CONVERT_TZ(logs.time_out, ?, ?), logs.time_in FROM (SELECT * FROM computer_checkout_log WHERE DATE(time_out) = CURDATE()) AS logs JOIN (SELECT * FROM computer_list WHERE branch = ? AND checkout = 1 AND status = 2) AS res ON logs.resource_id = res.id ORDER BY res.name', ["+00:00", "America/Chicago", req.params.branch], function(err, rows, fields) {				
+	pool.query('SELECT res.id, res.name, res.branch, logs.id AS log_id, logs.pat_name, CONVERT_TZ(logs.time_out, ?, ?) AS time_out, logs.time_in FROM (SELECT * FROM computer_checkout_log WHERE DATE(time_out) = CURDATE()) AS logs JOIN (SELECT * FROM computer_list WHERE branch = ? AND checkout = 1 AND status = 2) AS res ON logs.resource_id = res.id ORDER BY res.name', ["+00:00", "America/Chicago", req.params.branch], function(err, rows, fields) {				
 		if(err){
 			reportError(err, res);
 			return;
