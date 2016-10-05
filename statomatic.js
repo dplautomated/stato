@@ -193,7 +193,7 @@ app.get('/computer/list/:branch', function(req, res) {
 });
 
 app.get('/computer/last/:branch', function(req, res) {
-	pool.query('SELECT res.name FROM (SELECT * FROM computer_checkout_log LIMIT 40) AS logs JOIN (SELECT * FROM computer_list WHERE branch = ? AND checkout = 1) AS res ON logs.resource_id = res.id ORDER BY logs.time_out DESC LIMIT 1', [req.params.branch], function(err, rows, fields) {				
+	pool.query('SELECT res.name FROM (SELECT * FROM computer_checkout_log ORDER BY time_out DESC LIMIT 40) AS logs JOIN (SELECT * FROM computer_list WHERE branch = ? AND checkout = 1) AS res ON logs.resource_id = res.id ORDER BY logs.time_out DESC LIMIT 1', [req.params.branch], function(err, rows, fields) {				
 		if(err){
 			reportError(err, res);
 			return;
