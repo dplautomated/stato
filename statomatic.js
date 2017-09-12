@@ -9,7 +9,7 @@ var morgan = require('morgan');
 var crypto = require('crypto');
 
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-
+//This is only run once, if you don't have permission to access it fix that and redeploy.
 var pool = mysql.createPool({
   connectionLimit: 4,
   host     : 'mysql.dentonpl.com',
