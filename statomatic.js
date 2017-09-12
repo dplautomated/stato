@@ -465,5 +465,5 @@ app.get('/room/history/', function(req, res) {
 app.use('/computer/log', computerLogRouter);
 app.use('/room/log', roomLogRouter);
 
-app.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080, process.env.OPENSHIFT_NODEJS_IP || ''0.0.0.0, function(){console.log("Server started!")});
+app.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080, process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0', function(){console.log("Server started!")});
 
